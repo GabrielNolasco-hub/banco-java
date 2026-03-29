@@ -9,6 +9,9 @@ public class Main {
 
         int opcao = -1;
 
+        CalculadoraDeImposto calc = new CalculadoraDeImposto();
+        Gerente gerente = new Gerente("admin","1234");
+
         while (opcao != 0) {
 
             System.out.println("\n===== BANCO JAVA =====");
@@ -18,6 +21,8 @@ public class Main {
             System.out.println("4 - Sacar");
             System.out.println("5 - Transferir");
             System.out.println("6 - Consultar saldo");
+            System.out.println("7 - Calcular tributo");
+            System.out.println("8 - Autenticar gerente");
             System.out.println("0 - Sair");
 
             System.out.print("Escolha: ");
@@ -133,6 +138,35 @@ public class Main {
                         System.out.println("Saldo: " + conta3.getSaldo());
                     } else {
                         System.out.println("Conta não encontrada.");
+                    }
+
+                    break;
+
+                case 7:
+
+                    for (Conta c : banco.getContas()) {
+
+                        if (c instanceof Tributavel) {
+                            calc.registrar((Tributavel) c);
+                        }
+                    }
+
+                    System.out.println("Total de tributos: " + calc.getTotalImposto());
+                    
+                    break;
+
+
+                case 8:
+
+                    scanner.nextLine(); 
+
+                    System.out.print("Digite a senha do gerente: ");
+                    String senha = scanner.nextLine();
+
+                    if (gerente.autenticar(senha)) {
+                        System.out.println("Acesso liberado!");
+                    } else {
+                        System.out.println("Senha incorreta!");
                     }
 
                     break;
